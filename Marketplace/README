@@ -1,0 +1,49 @@
+===================
+IUGA FLORIN-EUGEN
+335CA
+===================
+
+
+
+
+				
+			   ============================
+				PROJECT 1 - Marketplace
+			   ============================
+
+
+
+	Summary
+   ==================
+
+
+   	The idea of this project is to implement a Marketplace where producers can produce
+   their own products and consumers can "buy" those products from producers. The problem can be
+   designed as a Multi Producer Multi Consumer.
+
+
+       Basic implementation ideas
+   ===================================
+
+   	As mentioned above, I implemented Multi Producer Multi Consumer, but with some changes that
+   the project requirments involved.
+	First of all, every producer has its own queue (list) where it can add
+   products as long as the list didn't reach the required maximum capacity. If the list is full, then the
+   producer must wait for some time in order to get a free spot.
+	Secondly, instead of using a Semaphore as signal sending between producers and consumers
+   (eg.: when a consumer consumed something from buffer call empty.release() so that a producer
+   could use the new free spot for a product), the publish() function returns False if it couldn't
+   add a product to the list because of its capacity and therefore the producer will wait for some
+   time until a free spot comes up.
+	I had to use a Lock() for incrementing the producer_id and the cart_id, as these were critical
+   sections. I didn't use Lock() for list.remove(), list.append() etc. since these are already thread
+   safe operations.
+
+
+	Run
+   =============
+
+   For testing, use Python>=3.7
+   
+	
+   
